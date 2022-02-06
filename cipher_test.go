@@ -63,20 +63,20 @@ func Test_RSA_AES_Hybrid_Encryption(t *testing.T) {
 	// this usually done by the recipient (aka server).
 	//
 
-	pvtKey, pubKey, err := GenerateKeyPair(4096)
+	pvtKey, pubKey, err := GenerateRSAKeyPair(4096)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// write the pvt key to fs for testing purposes
-	pvtData := PrivateKeyToBytes(pvtKey)
+	pvtData := RSAPrivateKeyToBytes(pvtKey)
 	err = ioutil.WriteFile("build/pvt.pem", pvtData, os.ModePerm)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// write the pub key to fs for testing purposes
-	pubData, err := PublicKeyToBytes(pubKey)
+	pubData, err := RSAPublicKeyToBytes(pubKey)
 	if err != nil {
 		t.Fatal(err)
 	}

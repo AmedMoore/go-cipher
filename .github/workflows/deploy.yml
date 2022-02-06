@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_release:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Release
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v2
+        with:
+          go-version: "^1.17.5"
+      - run: go version
+      - run: make build
+      - id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: 0.1.0
+      - id: semvers
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
+      - id: release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.semvers.outputs.v_minor }}
+          release_name: Release ${{ steps.semvers.outputs.v_minor }}
+          body: ""
+          draft: false
+          prerelease: false
