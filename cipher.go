@@ -26,7 +26,7 @@ func GenerateRSAKeyPair(bits int) (*rsa.PrivateKey, *rsa.PublicKey, error) {
 // RSAPrivateKeyToBytes RSA private key to bytes
 func RSAPrivateKeyToBytes(pk *rsa.PrivateKey) []byte {
 	return pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PRIVATE KEY",
+		Type:  "PRIVATE KEY",
 		Bytes: x509.MarshalPKCS1PrivateKey(pk),
 	})
 }
@@ -38,7 +38,7 @@ func RSAPublicKeyToBytes(pub *rsa.PublicKey) ([]byte, error) {
 		return nil, err
 	}
 	return pem.EncodeToMemory(&pem.Block{
-		Type:  "RSA PUBLIC KEY",
+		Type:  "PUBLIC KEY",
 		Bytes: pubASN1,
 	}), nil
 }
